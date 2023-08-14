@@ -18,12 +18,13 @@ for i in range(100):
 
     fake_first = fake.first_name()
     fake_last = fake.last_name()
-
+    fake_email = fake.email()
     users.append(
         User(
             first_name=fake_first,
             last_name=fake_last,
             username=f"{fake_first}_{fake_last}",
+            email=fake_email,
             birthday=datetime.strptime(fake.date(), '%Y-%m-%d').date()
         )
     )
