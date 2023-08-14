@@ -22,3 +22,5 @@
 # alembic downgrade -1
 
 # alembic downgrade Base
+
+# session.query(User).first().events, session.query(User).first().email, session.query(Event).first().user, session.query(User).get(1)

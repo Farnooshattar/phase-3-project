@@ -19,7 +19,8 @@ class User(Base):
     email = Column(String(55))
     birthday = Column(DateTime)
 
-    events = relationship('Event', back_populates='users')
+    # One-to-many relationship with Event
+    events = relationship("Event", backref="user")
 
     def __repr__(self):
         id = str(self.id)
@@ -43,46 +44,19 @@ class Event(Base):
     title = Column(String)
     description = Column(String)
     date_time = Column(DateTime)
+    # Many-to-one relationship with User
     user_id = Column(Integer, ForeignKey('users.id'))
-
-    user = relationship('User', back_populates='events')
+    # user = relationship("User", back_populates="events")
 
     def __repr__(self):
-        id = str(self.id)
+        id_str = str(self.id)
+        # Format the datetime object as a string
+        date_time_str = self.date_time.strftime('%Y-%m-%d %H:%M:%S')
 
         return \
             green(f"\n<Event ") + \
-            color(f"id={color(id).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
+            color(f"id={color(id_str).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
             color(f"title={color(self.title).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
             color(f"description={color(self.description).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
-            color(f"date_time={color(self.date_time).rgb_fg(132, 209, 50)}").rgb_fg(83, 36, 224) + \
+            color(f"date_time={color(date_time_str).rgb_fg(132, 209, 50)}").rgb_fg(83, 36, 224) + \
             green(">")
-#     @classmethod
-#     def add_user(cls, first_name):
-
-#         user = User(first_name=first_name)
-#         session.add(user)
-#         session.commit()
-#         return user
-
-
-# user = User.add_user("Bob")
-# user = User.add_user("Sue")
-
-# session.commit()
-
-
-# last_name = Column(String)
-# email = Column(String, unique=True)
-# phone_number = Column(String)
-# address = Column(String)
-# city = Column(String)
-# state = Column(String)
-# zip_code = Column(String)
-
-# events = relationship("event", backref="user")
-# user = session.query(cls).filter(
-#     cls.first_name.like(first_name)).first()
-# if user:
-#     return user
-# else:
