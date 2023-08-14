@@ -36,6 +36,17 @@ class User(Base):
             color(f"birthday={color(birthday).rgb_fg(132, 209, 50)}").rgb_fg(83, 36, 224) + \
             green(">")
 
+    @classmethod
+    def find_or_create_by(cls, email):
+        user = session.query(cls).filter(cls.email.like(email)).first()
+        if user:
+            return user
+        else:
+            user = User(email=email)
+            session.add(user)
+            session.commit()
+            return user
+
 
 class Event(Base):
     __tablename__ = 'events'
