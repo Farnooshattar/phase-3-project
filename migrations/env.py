@@ -62,7 +62,7 @@ def run_migrations_online() -> None:
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
-    # we need to add render_as_batch so tha sqlAlchemy knows how to alter tables
+    # we need to add render_as_batch so that sqlAlchemy knows how to alter tables
     with connectable.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata, render_as_batch=True
