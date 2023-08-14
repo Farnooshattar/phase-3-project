@@ -1,1 +1,14 @@
 # phase-3-project
+
+1. create virtual environment, first created the project in github (then in terminal:pipenv --python 3.9.2)
+2. install dependencies (run: pipenv install sqlalchemy==1.4.41 alembic ipdb faker)
+   a. SQLAlchemy 1.4.41
+   b. Alembic (migration manager)
+   c. ipdb
+   d. faker (to generate fake data)
+3. create the migration environmet
+4. to configure the migration environmet (alembic.ini and env.py)
+5. create the declarative_base
+6. create schema (python classes or models)
+7. populate the database with seeds
+8. test the relationships (one to many in this project)
