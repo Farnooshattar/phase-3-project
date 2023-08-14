@@ -37,7 +37,7 @@ class User(Base):
             green(">")
 
     @classmethod
-    def find_or_create_by(cls, email):
+    def find_by(cls, email):
         user = session.query(cls).filter(cls.email.like(email)).first()
         if user:
             return user

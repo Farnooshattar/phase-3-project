@@ -12,14 +12,16 @@ class Cli():
 
     def start(self):
         self.clear_screen(44)
-        options = ["Login", "Exit"]
+        options = ["Login", "SignUp", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
         if options[menu_entry_index] == "Login":
             self.handle_login()
-        else:
+        elif options[menu_entry_index] == "Exit":
             self.exit()
+        else:
+            self.handle_signup()
 
     def clear_screen(self, lines):
         print("\n" * lines)
@@ -29,7 +31,7 @@ class Cli():
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
         if re.fullmatch(regex, email):
             print("Find a user by email")
-            user = User.find_or_create_by(email)
+            user = User.find_by(email)
 
             self.current_user = user
 
@@ -48,6 +50,9 @@ class Cli():
         menu_entry_index = terminal_menu.show()
 
         print(options[menu_entry_index])
+
+    def handle_signup(self):
+        pass
 
     def exit(self):
         print("Bye!")
