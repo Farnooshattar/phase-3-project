@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 
 from prettycli import green, color
@@ -12,12 +12,14 @@ Base.metadata.create_all(engine)
 
 class User(Base):
     __tablename__ = "users"
-    id = Column("user_id", Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     username = Column(String(25), unique=True)
     email = Column(String(55))
     birthday = Column(DateTime)
+
+    events = relationship('Event', back_populates='users')
 
     def __repr__(self):
         id = str(self.id)
@@ -33,6 +35,28 @@ class User(Base):
             color(f"birthday={color(birthday).rgb_fg(132, 209, 50)}").rgb_fg(83, 36, 224) + \
             green(">")
 
+
+class Event(Base):
+    __tablename__ = 'events'
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+    date_time = Column(DateTime)
+    user_id = Column(Integer, ForeignKey('users.id'))
+
+    user = relationship('User', back_populates='events')
+
+    def __repr__(self):
+        id = str(self.id)
+
+        return \
+            green(f"\n<Event ") + \
+            color(f"id={color(id).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
+            color(f"title={color(self.title).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
+            color(f"description={color(self.description).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
+            color(f"date_time={color(self.date_time).rgb_fg(132, 209, 50)}").rgb_fg(83, 36, 224) + \
+            green(">")
 #     @classmethod
 #     def add_user(cls, first_name):
 

@@ -1,4 +1,5 @@
 from models import User
+from models import Event
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -29,9 +30,12 @@ for i in range(100):
         )
     )
 print(users)
+# print(events)
 session.query(User).delete()
 session.commit()
 
 
 session.bulk_save_objects(users)
+
+
 session.commit()
