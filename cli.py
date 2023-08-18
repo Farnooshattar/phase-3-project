@@ -6,6 +6,10 @@ from simple_term_menu import TerminalMenu
 from models import User
 from models import Event
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 class Cli():
 
@@ -56,13 +60,14 @@ class Cli():
         self.show_user_options()
 
     def show_user_options(self):
-        options = ["My Events", "New Event", "Edit My Info", "Exit"]
+        options = ["My Events", "New Event", "Edit My Event", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
         # print(options[menu_entry_index])
         if options[menu_entry_index] == "My Events":
             Event.find_events_by(self.id)
+            self.show_user_options()
         if options[menu_entry_index] == "New Event":
             title = input("Please enter a title for your event:")
             description = input("Please enter a description for your event:")
@@ -72,8 +77,13 @@ class Cli():
                 date_time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
             except ValueError:
                 print("Invalid date format. Please use the format: YYYY-MM-DD HH:MM:SS")
+                self.show_user_options()
             else:
                 Event.add_new_event(self.id, title, description, date_time)
+                print("Event added successfully!")
+                self.show_user_options()
+        if options[menu_entry_index] == "Exit":
+            self.exit()
 
     def exit(self):
         print("Bye!")
