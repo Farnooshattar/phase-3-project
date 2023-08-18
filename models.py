@@ -13,8 +13,8 @@ Base.metadata.create_all(engine)
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
+    first_name = Column(String)
+    last_name = Column(String)
     username = Column(String(25), unique=True)
     email = Column(String(55))
     birthday = Column(DateTime)
@@ -42,10 +42,18 @@ class User(Base):
         if user:
             return user
         else:
-            user = User(email=email)
-            session.add(user)
-            session.commit()
-            return user
+            # user = User(email=email)
+            # session.add(user)
+            # session.commit()
+            return False
+
+    @classmethod
+    def Add_user_by(cls, email):
+        user = User(email=email)
+        session.add(user)
+        session.commit()
+        # print(user)
+        return user
 
 
 class Event(Base):
@@ -71,3 +79,7 @@ class Event(Base):
             color(f"description={color(self.description).rgb_fg(132, 209, 50)}, ").rgb_fg(83, 36, 224) + \
             color(f"date_time={color(date_time_str).rgb_fg(132, 209, 50)}").rgb_fg(83, 36, 224) + \
             green(">")
+
+    @classmethod
+    def find_events_by(cls, user_id):
+        print(session.query(cls).filter(cls.user_id == user_id).all())
