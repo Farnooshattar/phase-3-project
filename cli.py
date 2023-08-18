@@ -1,5 +1,6 @@
 import re
 import time
+from datetime import datetime
 from prettycli import red
 from simple_term_menu import TerminalMenu
 from models import User
@@ -62,6 +63,17 @@ class Cli():
         # print(options[menu_entry_index])
         if options[menu_entry_index] == "My Events":
             Event.find_events_by(self.id)
+        if options[menu_entry_index] == "New Event":
+            title = input("Please enter a title for your event:")
+            description = input("Please enter a description for your event:")
+            date = input(
+                "Please enter a date and time for your event (YYYY-MM-DD HH:MM:SS):")
+            try:
+                date_time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                print("Invalid date format. Please use the format: YYYY-MM-DD HH:MM:SS")
+            else:
+                Event.add_new_event(self.id, title, description, date_time)
 
     def exit(self):
         print("Bye!")

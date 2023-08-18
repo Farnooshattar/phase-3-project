@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-
+import ipdb
 from prettycli import green, color
 
 Base = declarative_base()
@@ -83,3 +83,12 @@ class Event(Base):
     @classmethod
     def find_events_by(cls, user_id):
         print(session.query(cls).filter(cls.user_id == user_id).all())
+
+    @classmethod
+    def add_new_event(cls, user_id, title, description, date_time):
+        # ipdb.set_trace()
+        event = Event(title=title, description=description,
+                      date_time=date_time, user_id=user_id)
+        session.add(event)
+        session.commit()
+        return event
