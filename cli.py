@@ -65,27 +65,9 @@ class Cli():
         print(f"Hello, {user.email} 👋")
         self.show_user_options()
 
-    def delete_event(self):
-        event_id = int(
-            input("Please enter the ID of the event you want to delete: "))
-        event = Event.show_first_event(self.id)
-        if event:
-            confirm = input(
-                f"Are you sure you want to delete event {event_id}? (yes/no): ")
-            if confirm.lower() == "yes":
-                deleted = Event.delete_event(event_id)
-                if deleted:
-                    print("Event deleted successfully!")
-                else:
-                    print("Event not found.")
-            else:
-                print("Event deletion canceled.")
-        else:
-            print("No events found.")
-
     def show_user_options(self):
         options = ["My Events", "New Event",
-                   "Edit My Event",  "Delete Event", "Exit"]
+                   "Edit Event",  "Delete Event", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
@@ -107,10 +89,57 @@ class Cli():
                 Event.add_new_event(self.id, title, description, date_time)
                 print("Event added successfully!")
                 self.show_user_options()
+        if options[menu_entry_index] == "Edit Event":
+            self.edit_event()
+
         if options[menu_entry_index] == "Delete Event":
             self.delete_event()
         if options[menu_entry_index] == "Exit":
             self.exit()
+
+    def edit_event(self):
+        event_id = int(
+            input("Please enter the ID of the event you want to edit: "))
+        event = Event.show_first_event(self.id)
+        if event:
+            title = input("Please enter a new title for the event: ")
+            description = input(
+                "Please enter a new description for the event: ")
+            date = input(
+                "Please enter a new date and time for the event (YYYY-MM-DD HH:MM:SS): ")
+            try:
+                date_time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                print("Invalid date format. Please use the format: YYYY-MM-DD HH:MM:SS")
+            else:
+                updated_event = Event.edit_event(
+                    event_id, title, description, date_time)
+                if updated_event:
+                    print("Event updated successfully!")
+                else:
+                    print("Event not found.")
+        else:
+            print("No events found.")
+        self.show_user_options()
+
+    def delete_event(self):
+        event_id = int(
+            input("Please enter the ID of the event you want to delete: "))
+        event = Event.show_first_event(self.id)
+        if event:
+            confirm = input(
+                f"Are you sure you want to delete event {event_id}? (yes/no): ")
+            if confirm.lower() == "yes":
+                deleted = Event.delete_event(event_id)
+                if deleted:
+                    print("Event deleted successfully!")
+                else:
+                    print("Event not found.")
+            else:
+                print("Event deletion canceled.")
+        else:
+            print("No events found.")
+        self.show_user_options()
 
     def exit(self):
         print("Bye!")
