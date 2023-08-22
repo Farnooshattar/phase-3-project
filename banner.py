@@ -1,4 +1,4 @@
-from prettycli import red, blue
+from prettycli import red
 
 
 class Banner:

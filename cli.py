@@ -19,17 +19,17 @@ class Cli():
     def start(self):
         self.clear_screen(44)
         banner.welcome()
-
+        # first user menu
         options = ["Login", "SignUp", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
         if options[menu_entry_index] == "Login":
             self.handle_login()
-        elif options[menu_entry_index] == "Exit":
-            self.exit()
-        else:
+        elif options[menu_entry_index] == "SignUp":
             self.handle_signup()
+        else:
+            self.exit()
 
     def clear_screen(self, lines):
         print("\n" * lines)
