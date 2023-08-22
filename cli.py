@@ -99,7 +99,7 @@ class Cli():
         if options[menu_entry_index] == "Upcoming Events":
             Event.show_upcoming_events(self.id)
             self.show_user_options()
-            
+
         if options[menu_entry_index] == "Missed Events":
             missed_events = Event.find_missed_events(self.id)
             if missed_events:
