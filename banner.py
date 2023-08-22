@@ -3,7 +3,7 @@ from prettycli import red, blue
 
 class Banner:
     def welcome(self):
-        print(blue("My"))
+        print(blue("Here is your"))
         print(
             red(
                 """             

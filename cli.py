@@ -6,6 +6,9 @@ from prettycli import red
 from simple_term_menu import TerminalMenu
 from models import User
 from models import Event
+from banner import Banner
+
+banner = Banner()
 
 
 class Cli():
@@ -15,6 +18,7 @@ class Cli():
 
     def start(self):
         self.clear_screen(44)
+        banner.welcome()
 
         options = ["Login", "SignUp", "Exit"]
         terminal_menu = TerminalMenu(options)
