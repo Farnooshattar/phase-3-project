@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-import ipdb
 from prettycli import green, color
 import datetime
 
@@ -11,7 +10,7 @@ session = Session()
 Base.metadata.create_all(engine)
 
 
-class User(Base):
+class User(Base):  # users table
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     first_name = Column(String)
@@ -20,7 +19,7 @@ class User(Base):
     email = Column(String(55))
     birthday = Column(DateTime)
 
-    # One-to-many relationship with Event
+    # Class has a One-to-many relationship with Event
     events = relationship("Event", backref="user")
 
     def __repr__(self):
@@ -43,9 +42,6 @@ class User(Base):
         if user:
             return user
         else:
-            # user = User(email=email)
-            # session.add(user)
-            # session.commit()
             return False
 
     @classmethod
@@ -57,7 +53,7 @@ class User(Base):
         return user
 
 
-class Event(Base):
+class Event(Base):  # events table
     __tablename__ = 'events'
 
     id = Column(Integer, primary_key=True, index=True)

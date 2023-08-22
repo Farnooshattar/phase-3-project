@@ -43,6 +43,7 @@ class Cli():
         # checks the format of the email before loggin in"
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
         if re.fullmatch(regex, email):
+            # calls find_by the class method of class User
             user = User.find_by(email)
             if user:  # if the user is found by email, greets the user and shows menu
                 self.current_user = user
