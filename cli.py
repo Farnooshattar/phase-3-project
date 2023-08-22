@@ -49,11 +49,11 @@ class Cli():
                 self.id = user.id
                 print(f"Hello, {user.email} 👋")
                 self.show_user_options()
-            else:  # if the user is not found, informs the user and shows the menu again after 3 seconds
+            else:  # if the user is not found, asks the user to sign up, holds 3 seconds
                 print("user not found, please signup")
                 time.sleep(3)
                 self.start()
-        else:
+        else:  # if the email is not valid, informs the user and shows the menu again after 3 seconds
             print(red("Invalid email. Please try again!"))
             time.sleep(3)
             self.start()
