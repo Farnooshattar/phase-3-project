@@ -120,7 +120,7 @@ class Cli():
     def edit_event(self):
         event_id = int(
             input("Please enter the ID of the event you want to edit: "))
-        event = Event.show_first_event(self.id)
+        event = Event.find_events_by(self.id)
         if event:
             title = input("Please enter a new title for the event: ")
             description = input(
