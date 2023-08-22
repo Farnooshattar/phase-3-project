@@ -68,7 +68,7 @@ class Cli():
 
     def show_user_options(self):
         options = ["My Events", "New Event",
-                   "Edit Event", "Missed Events", "Delete Event", "Exit"]
+                   "Edit Event", "Missed Events", "Upcoming Events", "Delete Event", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
