@@ -96,6 +96,9 @@ class Cli():
                 print("Event added successfully!")
                 self.show_user_options()
 
+        if options[menu_entry_index] == "Upcoming Events":
+            self.show_upcoming_events()
+
         if options[menu_entry_index] == "Missed Events":
             missed_events = Event.find_missed_events(self.id)
             if missed_events:
