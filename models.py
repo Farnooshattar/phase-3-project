@@ -49,7 +49,6 @@ class User(Base):  # users table
         user = User(email=email)
         session.add(user)
         session.commit()
-        # print(user)
         return user
 
 
@@ -62,7 +61,6 @@ class Event(Base):  # events table
     date_time = Column(DateTime)
     # Many-to-one relationship with User
     user_id = Column(Integer, ForeignKey('users.id'))
-    # user = relationship("User", back_populates="events")
 
     def __repr__(self):
         id_str = str(self.id)
@@ -78,18 +76,41 @@ class Event(Base):  # events table
             green(">")
 
     @classmethod
+    # ids are indexed, so this is a fast retreival of the events!
     def find_events_by(cls, user_id):
-        # print(session.query(cls).filter(cls.user_id == user_id).all())
         return session.query(cls).filter(cls.user_id == user_id).all()
 
     @classmethod
     def add_new_event(cls, user_id, title, description, date_time):
-        # ipdb.set_trace()
         event = Event(title=title, description=description,
                       date_time=date_time, user_id=user_id)
         session.add(event)
         session.commit()
         return event
+
+    @classmethod
+    def show_upcoming_events(cls, user_id):
+        # creates an empty dictionary to store the upcoming events
+        # grouped by the number of days until they occur
+        upcoming_events = {}
+        current_datetime = datetime.datetime.now()
+        for event in Event.find_events_by(user_id):
+            if event.date_time > current_datetime:
+                days_until_event = (event.date_time - current_datetime).days
+                # checks if the calculated days_until_event is already a key
+                if days_until_event not in upcoming_events:
+                    # If not, a new empty list is added as the value for that key
+                    upcoming_events[days_until_event] = []
+                upcoming_events[days_until_event].append(event)
+
+        if upcoming_events:
+            print("Upcoming Events:")
+            for days_until_event, events in sorted(upcoming_events.items()):
+                print(f"\n{days_until_event} days from now:")
+                for event in events:
+                    print(f"- {event.title} on {event.date_time}")
+        else:
+            print("No upcoming events found.")
 
     @classmethod
     def show_first_event(cls, user_id):
@@ -113,27 +134,6 @@ class Event(Base):  # events table
         current_datetime = datetime.datetime.now()
 
         return session.query(cls).filter(cls.user_id == user_id, cls.date_time < current_datetime).all()
-
-    @classmethod
-    def show_upcoming_events(cls, user_id):
-        upcoming_events = {}
-        current_datetime = datetime.datetime.now()
-        for event in Event.find_events_by(user_id):
-            if event.date_time > current_datetime:
-                days_until_event = (event.date_time - current_datetime).days
-                if days_until_event not in upcoming_events:
-                    # populates the dictionary
-                    upcoming_events[days_until_event] = []
-                upcoming_events[days_until_event].append(event)
-
-        if upcoming_events:
-            print("Upcoming Events:")
-            for days_until_event, events in sorted(upcoming_events.items()):
-                print(f"\n{days_until_event} days from now:")
-                for event in events:
-                    print(f"- {event.title} on {event.date_time}")
-        else:
-            print("No upcoming events found.")
 
     @classmethod
     def delete_event(cls, event_id):

@@ -3,7 +3,6 @@
 #######################################
 import re
 import time
-import ipdb
 from datetime import datetime
 from prettycli import red
 from simple_term_menu import TerminalMenu
@@ -46,7 +45,6 @@ class Cli():
             # calls find_by the class method of class User
             user = User.find_by(email)
             if user:  # if the user is found by email, greets the user and shows menu
-                # self.current_user = user
                 self.id = user.id
                 print(f"Hello, {user.email} 👋")
                 self.show_user_options()
@@ -61,8 +59,8 @@ class Cli():
 
     def handle_signup(self):
         email = input("Please add a new email to sign up")
+        # calls Add_user_by email, the class method of class User
         user = User.Add_user_by(email)
-        # self.current_user = user
         self.id = user.id
         print(f"Hello, {user.email} 👋")
         self.show_user_options()
@@ -73,13 +71,13 @@ class Cli():
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
-        # print(options[menu_entry_index])
         if options[menu_entry_index] == "My Events":
             event = Event.find_events_by(self.id)
+            # if any events are returned, give the user options to handle events
             if event:
                 print(event)
                 self.show_user_options()
-            else:
+            else:  # otherwise ask the user to add events
                 print("you have no events yet, please add events")
                 self.show_user_options()
         if options[menu_entry_index] == "New Event":
@@ -92,7 +90,7 @@ class Cli():
             except ValueError:
                 print("Invalid date format. Please use the format: YYYY-MM-DD HH:MM:SS")
                 self.show_user_options()
-            else:
+            else:  # if the format of the event is valid, add it to events
                 Event.add_new_event(self.id, title, description, date_time)
                 print("Event added successfully!")
                 self.show_user_options()
