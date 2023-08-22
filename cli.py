@@ -1,3 +1,6 @@
+# #####################################
+# This is a CLI for an event calender #
+#######################################
 import re
 import time
 import ipdb
@@ -8,7 +11,7 @@ from models import User
 from models import Event
 from banner import Banner
 
-banner = Banner()
+calendar_banner = Banner()
 
 
 class Cli():
@@ -17,8 +20,9 @@ class Cli():
         current_user = None
 
     def start(self):
+        # clear the screen every time the program starts
         self.clear_screen(44)
-        banner.welcome()
+        calendar_banner.welcome()
         # first user menu
         options = ["Login", "SignUp", "Exit"]
         terminal_menu = TerminalMenu(options)
