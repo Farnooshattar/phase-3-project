@@ -130,6 +130,15 @@ class Event(Base):
                     upcoming_events[days_until_event] = []
                 upcoming_events[days_until_event].append(event)
 
+        if upcoming_events:
+            print("Upcoming Events:")
+            for days_until_event, events in sorted(upcoming_events.items()):
+                print(f"\n{days_until_event} days from now:")
+                for event in events:
+                    print(f"- {event.title} on {event.date_time}")
+        else:
+            print("No upcoming events found.")
+
     @classmethod
     def delete_event(cls, event_id):
         event = session.query(cls).filter_by(id=event_id).first()
