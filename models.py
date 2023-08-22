@@ -113,11 +113,6 @@ class Event(Base):  # events table
             print("No upcoming events found.")
 
     @classmethod
-    def show_first_event(cls, user_id):
-        return (session.query(cls).filter(cls.user_id ==
-                                          user_id).order_by(cls.date_time.asc()).first())
-
-    @classmethod
     def edit_event(cls, event_id, title, description, date_time):
         event = session.query(cls).filter_by(id=event_id).first()
         if event:

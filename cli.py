@@ -145,7 +145,7 @@ class Cli():
     def delete_event(self):
         event_id = int(
             input("Please enter the ID of the event you want to delete: "))
-        event = Event.show_first_event(self.id)
+        event = Event.find_events_by(self.id)
         if event:
             confirm = input(
                 f"Are you sure you want to delete event {event_id}? (yes/no): ")
