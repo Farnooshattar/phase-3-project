@@ -40,7 +40,7 @@ class Cli():
 
     def handle_login(self):
         email = input("Please enter your email:\n\n")
-        # checks the format of the email
+        # checks the format of the email before loggin in"
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
         if re.fullmatch(regex, email):
             user = User.find_by(email)
