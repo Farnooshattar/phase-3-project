@@ -120,8 +120,8 @@ class Event(Base):
 
     @classmethod
     def show_upcoming_events(cls, user_id):
-    upcoming_events = {}
-    
+        upcoming_events = {}
+        current_datetime = datetime.now()
 
     @classmethod
     def delete_event(cls, event_id):
