@@ -85,6 +85,11 @@ class Event(Base):
         print(session.query(cls).filter(cls.user_id == user_id).all())
 
     @classmethod
+    def show_first_event(cls, user_id):
+        return (session.query(cls).filter(cls.user_id ==
+                                          user_id).order_by(cls.date_time.asc()).first())
+
+    @classmethod
     def add_new_event(cls, user_id, title, description, date_time):
         # ipdb.set_trace()
         event = Event(title=title, description=description,
@@ -92,3 +97,13 @@ class Event(Base):
         session.add(event)
         session.commit()
         return event
+
+    @classmethod
+    def delete_event(cls, event_id):
+        event = session.query(cls).filter_by(id=event_id).first()
+        if event:
+            session.delete(event)
+            session.commit()
+            return True
+        else:
+            return False

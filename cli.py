@@ -1,14 +1,13 @@
 import re
 import time
+import ipdb
 from datetime import datetime
 from prettycli import red
 from simple_term_menu import TerminalMenu
 from models import User
 from models import Event
 
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+# from plyer import notification
 
 
 class Cli():
@@ -18,6 +17,10 @@ class Cli():
 
     def start(self):
         self.clear_screen(44)
+        # title = "hi"
+        # message = "how are you?"
+        # notification.notify(
+        #     title=title, message=message, app_icon=None, app_name=None, timeout=10, toast=False)
         options = ["Login", "SignUp", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
@@ -42,6 +45,9 @@ class Cli():
                 self.current_user = user
                 self.id = user.id
                 print(f"Hello, {user.email} 👋")
+                # if (Event.show_first_event(self.id)):
+                # ipdb.set_trace()
+
                 self.show_user_options()
             else:
                 print("user not found, please signup")
@@ -59,8 +65,27 @@ class Cli():
         print(f"Hello, {user.email} 👋")
         self.show_user_options()
 
+    def delete_event(self):
+        event_id = int(
+            input("Please enter the ID of the event you want to delete: "))
+        event = Event.show_first_event(self.id)
+        if event:
+            confirm = input(
+                f"Are you sure you want to delete event {event_id}? (yes/no): ")
+            if confirm.lower() == "yes":
+                deleted = Event.delete_event(event_id)
+                if deleted:
+                    print("Event deleted successfully!")
+                else:
+                    print("Event not found.")
+            else:
+                print("Event deletion canceled.")
+        else:
+            print("No events found.")
+
     def show_user_options(self):
-        options = ["My Events", "New Event", "Edit My Event", "Exit"]
+        options = ["My Events", "New Event",
+                   "Edit My Event",  "Delete Event", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
@@ -82,6 +107,8 @@ class Cli():
                 Event.add_new_event(self.id, title, description, date_time)
                 print("Event added successfully!")
                 self.show_user_options()
+        if options[menu_entry_index] == "Delete Event":
+            self.delete_event()
         if options[menu_entry_index] == "Exit":
             self.exit()
 

@@ -57,6 +57,6 @@ session.commit()
 #     print(f"User: {user}")
 #     for event in user.events:
 #         print(f"    Event: {event}")
-ipdb.set_trace()
+# ipdb.set_trace()
 print(session.query(Event).first().user_id)
 print(session.query(User).first().events)
