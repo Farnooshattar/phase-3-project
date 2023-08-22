@@ -7,8 +7,6 @@ from simple_term_menu import TerminalMenu
 from models import User
 from models import Event
 
-# from plyer import notification
-
 
 class Cli():
 
@@ -17,10 +15,7 @@ class Cli():
 
     def start(self):
         self.clear_screen(44)
-        # title = "hi"
-        # message = "how are you?"
-        # notification.notify(
-        #     title=title, message=message, app_icon=None, app_name=None, timeout=10, toast=False)
+
         options = ["Login", "SignUp", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
