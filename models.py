@@ -40,7 +40,7 @@ class User(Base):  # users table
     def find_by(cls, email):
         user = session.query(cls).filter(cls.email.like(email)).first()
         if user:
-            return user
+            return user  # returns a row of the user info
         else:
             return False
 

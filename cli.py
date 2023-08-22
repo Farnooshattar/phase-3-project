@@ -17,7 +17,7 @@ calendar_banner = Banner()
 class Cli():
 
     def __init__(self):
-        current_user = None
+        pass
 
     def start(self):
         # clear the screen every time the program starts
@@ -46,7 +46,7 @@ class Cli():
             # calls find_by the class method of class User
             user = User.find_by(email)
             if user:  # if the user is found by email, greets the user and shows menu
-                self.current_user = user
+                # self.current_user = user
                 self.id = user.id
                 print(f"Hello, {user.email} 👋")
                 self.show_user_options()
@@ -62,7 +62,7 @@ class Cli():
     def handle_signup(self):
         email = input("Please add a new email to sign up")
         user = User.Add_user_by(email)
-        self.current_user = user
+        # self.current_user = user
         self.id = user.id
         print(f"Hello, {user.email} 👋")
         self.show_user_options()
