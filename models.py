@@ -119,6 +119,11 @@ class Event(Base):
         return session.query(cls).filter(cls.user_id == user_id, cls.date_time < current_datetime).all()
 
     @classmethod
+    def show_upcoming_events(cls, user_id):
+    upcoming_events = {}
+    
+
+    @classmethod
     def delete_event(cls, event_id):
         event = session.query(cls).filter_by(id=event_id).first()
         if event:
