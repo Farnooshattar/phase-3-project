@@ -122,7 +122,7 @@ class Event(Base):
     def show_upcoming_events(cls, user_id):
         upcoming_events = {}
         current_datetime = datetime.datetime.now()
-        for event in Event.find_events_by(self.id):
+        for event in Event.find_events_by(user_id):
             if event.date_time > current_datetime:
                 days_until_event = (event.date_time - current_datetime).days
                 if days_until_event not in upcoming_events:
