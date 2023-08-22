@@ -126,6 +126,7 @@ class Event(Base):
             if event.date_time > current_datetime:
                 days_until_event = (event.date_time - current_datetime).days
                 if days_until_event not in upcoming_events:
+                    # populates the dictionary
                     upcoming_events[days_until_event] = []
                 upcoming_events[days_until_event].append(event)
 
