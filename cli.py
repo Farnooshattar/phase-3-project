@@ -62,6 +62,7 @@ class Cli():
         email = input("Please add a new email to sign up")
         user = User.Add_user_by(email)
         self.current_user = user
+        self.id = user.id
         print(f"Hello, {user.email} 👋")
         self.show_user_options()
 
@@ -73,8 +74,13 @@ class Cli():
 
         # print(options[menu_entry_index])
         if options[menu_entry_index] == "My Events":
-            Event.find_events_by(self.id)
-            self.show_user_options()
+            event = Event.find_events_by(self.id)
+            if event:
+                print(event)
+                self.show_user_options()
+            else:
+                print("you have no events yet, please add events")
+                self.show_user_options()
         if options[menu_entry_index] == "New Event":
             title = input("Please enter a title for your event:")
             description = input("Please enter a description for your event:")
@@ -89,11 +95,13 @@ class Cli():
                 Event.add_new_event(self.id, title, description, date_time)
                 print("Event added successfully!")
                 self.show_user_options()
+
         if options[menu_entry_index] == "Edit Event":
             self.edit_event()
 
         if options[menu_entry_index] == "Delete Event":
             self.delete_event()
+
         if options[menu_entry_index] == "Exit":
             self.exit()
 

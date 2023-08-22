@@ -82,7 +82,8 @@ class Event(Base):
 
     @classmethod
     def find_events_by(cls, user_id):
-        print(session.query(cls).filter(cls.user_id == user_id).all())
+        # print(session.query(cls).filter(cls.user_id == user_id).all())
+        return session.query(cls).filter(cls.user_id == user_id).all()
 
     @classmethod
     def add_new_event(cls, user_id, title, description, date_time):
