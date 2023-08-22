@@ -1,5 +1,5 @@
 # #####################################
-# This is a CLI for an event calender #
+# This is a CLI for an event calendar #
 #######################################
 import re
 import time
@@ -40,19 +40,16 @@ class Cli():
 
     def handle_login(self):
         email = input("Please enter your email:\n\n")
+        # checks the format of the email
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
         if re.fullmatch(regex, email):
-            # print("Find a user by email")
             user = User.find_by(email)
-            if user:
+            if user:  # if the user is found by email, greets the user and shows menu
                 self.current_user = user
                 self.id = user.id
                 print(f"Hello, {user.email} 👋")
-                # if (Event.show_first_event(self.id)):
-                # ipdb.set_trace()
-
                 self.show_user_options()
-            else:
+            else:  # if the user is not found, informs the user and shows the menu again after 3 seconds
                 print("user not found, please signup")
                 time.sleep(3)
                 self.start()
