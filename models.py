@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Foreign
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 import ipdb
 from prettycli import green, color
+import datetime
 
 Base = declarative_base()
 engine = create_engine("sqlite:///events_tracker.db")
@@ -110,6 +111,12 @@ class Event(Base):
             return event
         else:
             return None
+
+    @classmethod
+    def find_missed_events(cls, user_id):
+        current_datetime = datetime.datetime.now()
+
+        return session.query(cls).filter(cls.user_id == user_id, cls.date_time < current_datetime).all()
 
     @classmethod
     def delete_event(cls, event_id):

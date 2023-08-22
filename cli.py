@@ -68,7 +68,7 @@ class Cli():
 
     def show_user_options(self):
         options = ["My Events", "New Event",
-                   "Edit Event",  "Delete Event", "Exit"]
+                   "Edit Event", "Missed Events", "Delete Event", "Exit"]
         terminal_menu = TerminalMenu(options)
         menu_entry_index = terminal_menu.show()
 
@@ -95,6 +95,15 @@ class Cli():
                 Event.add_new_event(self.id, title, description, date_time)
                 print("Event added successfully!")
                 self.show_user_options()
+
+        if options[menu_entry_index] == "Missed Events":
+            missed_events = Event.find_missed_events(self.id)
+            if missed_events:
+                for event in missed_events:
+                    print(event)
+            else:
+                print("No missed events found.")
+            self.show_user_options()
 
         if options[menu_entry_index] == "Edit Event":
             self.edit_event()
