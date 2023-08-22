@@ -132,7 +132,7 @@ class Event(Base):  # events table
     @classmethod
     def find_missed_events(cls, user_id):
         current_datetime = datetime.datetime.now()
-
+        # filters out the events that are passed according to current dateand time
         return session.query(cls).filter(cls.user_id == user_id, cls.date_time < current_datetime).all()
 
     @classmethod
