@@ -3,12 +3,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 import ipdb
 from prettycli import green, color
 import datetime
-
-Base = declarative_base()
-engine = create_engine("sqlite:///events_tracker.db")
-Session = sessionmaker(bind=engine)
-session = Session()
-Base.metadata.create_all(engine)
+from session import session
 
 
 class User(Base):
