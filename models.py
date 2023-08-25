@@ -102,14 +102,19 @@ class Event(Base):  # events table
                     # If not, a new empty list is added as the value for that key
                     upcoming_events[days_until_event] = []
                 upcoming_events[days_until_event].append(event)
-
+        # Check if there are any upcoming events in the upcoming_events dictionary
         if upcoming_events:
             print("Upcoming Events:")
+            # Loop through the upcoming_events dictionary sorted by the number of days until each event
             for days_until_event, events in sorted(upcoming_events.items()):
+                # Print the header indicating the number of days until the event
                 print(f"\n{days_until_event} days from now:")
+                # Loop through the events occurring on the same number of days until the event
                 for event in events:
+                    # Display event details with its title and date
                     print(f"- {event.title} on {event.date_time}")
         else:
+            # If there are no upcoming events, print a message indicating so
             print("No upcoming events found.")
 
     @classmethod
