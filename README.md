@@ -1,5 +1,14 @@
 # phase-3-project
 
+Event Calendar CLI and Database Seeding
+
+This repository includes a Command Line Interface (CLI) application for managing events within a calendar. Additionally, the repository features a script for seeding the database with sample data.
+
+Event Calendar CLI
+The cli.py file contains a CLI application that empowers users to effectively manage their calendar events. Users can log in, sign up, view their events, create new events, edit existing events, and perform various other actions. The CLI interacts seamlessly with an SQLite database to store and organize user and event data.
+
+To run the CLI, execute the following command:
+
 1. create virtual environment, first created the project in github (then in terminal:pipenv --python 3.9.2, because my python version is 3.9.2 retrieved from python --version)
 2. install dependencies (run: pipenv install sqlalchemy==1.4.41 alembic ipdb faker)
    a. SQLAlchemy 1.4.41
